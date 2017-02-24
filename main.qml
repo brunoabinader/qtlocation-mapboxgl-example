@@ -11,39 +11,36 @@ Window {
     height: 640
 
     Plugin {
-        id: mapboxglPlugin
-        name: "mapboxgl"
-        PluginParameter{ name: "mapboxgl.access_token"; value: "pk.eyJ1IjoicGFvbG9hbmdlbGVsbGkiLCJhIjoiY2lwZnVjOGU1MDAwaXYzbWFsZ2V0ZXFsdiJ9.NsU1t5hyWCJazAvIK3DASw" }
+        id: plugin
+        name: "osm"
     }
 
     Map {
         id: map
         gesture.enabled: true
         anchors.fill: parent
-        plugin: mapboxglPlugin
-        center: QtPositioning.coordinate(0,0)
+        plugin: plugin
+        center: QtPositioning.coordinate(0,180)
         activeMapType: map.supportedMapTypes[0]
-        zoomLevel: 4
+        zoomLevel: 8
         copyrightsVisible: true
 
-        MapRectangle {
-            color: 'green'
-            border.width: 2
-            border.color: 'yellow'
-            topLeft {
-                latitude: 20
-                longitude: -20
-            }
-            bottomRight {
-                latitude: -20
-                longitude: 20
-            }
+        MapPolyline {
+            line.color: 'red'
+            line.width: 10
+            path: [
+                { latitude: 1, longitude: 179 },
+                { latitude: 1, longitude: -179 }
+            ]
+        }
 
-            MouseArea {
-                anchors.fill: parent
-                drag.target: parent
-                preventStealing: true
-            }
+        MapPolyline {
+            line.color: 'blue'
+            line.width: 10
+            path: [
+                { latitude: -1, longitude: -179 },
+                { latitude: -1, longitude: 179 }
+            ]
         }
     }
 }
